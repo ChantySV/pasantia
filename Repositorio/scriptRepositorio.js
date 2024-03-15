@@ -5,17 +5,19 @@ const cargaDocumentos = (datos) => {
   datos.forEach((dato) => {
     console.log(dato);
     resultadoDocumentos += `
-  <li>
-      <a href="../${dato.ruta_pdf}">
-        <div class="imagen-portada"></div>
-        <div class="informacion">
+    <a href="../${dato.ruta_pdf}">
+    <li>
+      <div class="imagen-portada">
+        <img src="logopdf.jpg" alt="Imagen de portada del PDF 1">
+      </div>
+      <div class="informacion">
           <h3 class="titulo">${dato.titulo}</h3>
           <p class="carrera">${dato.carrera}</p>
           <p class="autor">${dato.autor}</p>
           <p class="año">${dato.año}</p>
-        </div>
-      </a>
-    </li>
+      </div>
+    </li> 
+  </a>
   `;
   });
   contenedor_pdf.innerHTML = resultadoDocumentos;

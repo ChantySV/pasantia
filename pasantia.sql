@@ -9,7 +9,7 @@ CREATE TABLE Documentos (
     tipo VARCHAR(255) not null,
     facultad varchar(255) not null,
     carrera VARCHAR(255) not null,    
-    titulo VARCHAR(255) unique,
+    titulo VARCHAR(255),
     autor VARCHAR(255) not null,
     año YEAR not null,
     sede varchar(255) not null,

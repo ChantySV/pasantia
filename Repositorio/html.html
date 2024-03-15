@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repositorio de PDF</title>
+  <link rel="stylesheet" href="styleRepositorio.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+  <div class="hero">
+    <nav>
+      <h2 class="logo">UP<span>DS</span></h2>
+      <ul>
+        <li><a href="#">Carreras <span data-dropdown>▾</span></a>
+          <div class="dropdown-content carreras">
+            <ul>
+              <li><a href="#">Ingeniería Informática</a></li>
+              <li><a href="#">Medicina</a></li>
+              <li><a href="#">Derecho</a></li>
+              <li><a href="#">Administración de Empresas</a></li>
+              <li><a href="#">Psicología</a></li>
+              <li><a href="#">Arquitectura</a></li>
+              <li><a href="#">Ingeniería Industrial</a></li>
+              <li><a href="#">Contabilidad</a></li>
+              <li><a href="#">Comunicación Social</a></li>
+              <li><a href="#">Ingeniería Eléctrica</a></li>
+              <li><a href="#">Ingeniería Mecánica</a></li>
+              <li><a href="#">Biología</a></li>
+            </ul>
+          </div>
+        </li>
+        <li><a href="#">Categorías <span data-dropdown>▾</span></a>
+          <div class="dropdown-content categorias">
+            <ul>
+              <li><a href="#">Tesis</a></li>
+              <li><a href="#">Proyecto de Grado</a></li>
+              <li><a href="#">Trabajo Dirigido</a></li>
+            </ul>
+          </div>
+        </li>
+        <li><a href="#">Sedes <span data-dropdown>▾</span></a>
+          <div class="dropdown-content sedes">
+            <ul>
+              <li><a href="#">La Paz</a></li>
+              <li><a href="#">Cochabamba</a></li>
+              <li><a href="#">Santa Cruz</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+      <button type="button">Ingresar</button>
+    </nav>
+
+    <section class="contenedor-pdfs">
+  <h2>Documentos Recientes</h2>
+  <ul id="lista-pdfs">   
+    </ul>
+</section>
+
+    <div id="pdfPreview"></div>
+
+    <div class="search-bar">
+      <input type="text" placeholder="      Buscar Documento">
+      <button type="submit">Buscar</button>
+    </div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.min.js"></script>
+  <script src="scriptRepositorio.js"></script>
+</body>

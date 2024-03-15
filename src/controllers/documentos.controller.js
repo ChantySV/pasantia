@@ -1,6 +1,8 @@
 const conexion = require("../config/database");
 const documentos = {};
 
+
+//GET
 documentos.get = (req, res) => {
   let sql = "SELECT * FROM documentos";
   conexion.query(sql, (err, result) => {
@@ -11,9 +13,12 @@ documentos.get = (req, res) => {
     res.json(result);
   });
 };
+
+//POST 
 documentos.post = (req, res) => {
   if (!req.file) {
       res.status(400).json({ error: "No se ha subido ningún archivo" });
+      console.log(res);
       return;
   }
   let año = parseInt(req.body.anho);
@@ -33,10 +38,11 @@ documentos.post = (req, res) => {
   conexion.query(sql, data, (err, result) => {
       if (err) {
           res.status(500).json({ error: "Error al ingresar los datos", err });
+          //console.log(err);
           return;
       }
       res.json(result);
-      console.log(data);
+      //console.log(data);
   });
 };
 // documentos.postSelectCarrera =(req, res) =>{
