@@ -18,7 +18,7 @@ const cargaDocumentos = (datos) => {
     <td>${dato.titulo}</td>
     <td>${dato.autor}</td>
     <td>${dato.año}</td>
-    <td><a href="../${dato.ruta_pdf}">Abrir</td>    
+    <td><a href="..${dato.ruta_pdf}">Abrir</td>    
   </tr>
   `;
   });
