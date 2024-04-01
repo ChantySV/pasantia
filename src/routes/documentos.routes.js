@@ -8,6 +8,7 @@ router.get('/documentos/carrera/:carrera', controller.getCarrera)
 router.get('/documentos/tipo/:tipo', controller.getTipo)
 router.get('/documentos/sede/:sede', controller.getSede)
 router.post('/documentos', upload.uploadPDF, controller.post)
-//router.put('/documentos', controller.put)
+router.put('/documentos/put/:id', upload.uploadPDF, controller.put)
+router.delete('/documentos/delete/:id_del', controller.delete)
 
 module.exports = router

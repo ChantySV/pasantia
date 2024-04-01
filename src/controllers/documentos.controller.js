@@ -1,10 +1,13 @@
+const fs = require("fs");
+const path = require("path");
+
 const conexion = require("../config/database");
 const documentos = {};
 //ADD UPLOAD
-function agregarUpload(data){
-  data.forEach(data => {
+function agregarUpload(data) {
+  data.forEach((data) => {
     // Ejemplo de modificación: Agregar una propiedad "status" a cada objeto
-    data.ruta_pdf = "/uploads/"+ data.ruta_pdf;      
+    data.ruta_pdf = "/uploads/" + data.ruta_pdf;
   });
   return data;
 }
@@ -17,15 +20,15 @@ documentos.get = (req, res) => {
       res.status(500).json({ error: "Error al obtener los documentos" });
       return;
     }
-   agregarUpload(result);
+    agregarUpload(result);
     res.json(result);
   });
 };
 
 //GET CARRERA
-documentos.getCarrera =(req, res) =>{
-  let sql = "Select * from documentos where carrera = ?"
-  conexion.query(sql, [req.params.carrera], (err ,result) =>{
+documentos.getCarrera = (req, res) => {
+  let sql = "Select * from documentos where carrera = ?";
+  conexion.query(sql, [req.params.carrera], (err, result) => {
     if (err) {
       res.status(500).json({ error: "Error al obtener los documentos" });
       console.log(err);
@@ -33,99 +36,182 @@ documentos.getCarrera =(req, res) =>{
     }
     agregarUpload(result);
     res.json(result);
-    //console.log(result);    
-  })
-}
+    //console.log(result);
+  });
+};
 
 //GET TIPO
-documentos.getTipo =(req, res) =>{
-  let sql = "Select * from documentos where tipo = ?"
-  conexion.query(sql, [req.params.tipo], (err ,result) =>{
+documentos.getTipo = (req, res) => {
+  let sql = "Select * from documentos where tipo = ?";
+  conexion.query(sql, [req.params.tipo], (err, result) => {
     if (err) {
-      res.status(500).json({ error: "Error al obtener los documentos por tipo" });
+      res
+        .status(500)
+        .json({ error: "Error al obtener los documentos por tipo" });
       console.log(err);
       return;
     }
     agregarUpload(result);
     res.json(result);
     //console.log(result);
-  })
-}
+  });
+};
 
 //GET SEDE
-documentos.getSede =(req, res) =>{
-  let sql = "Select * from documentos where sede = ?"
-  conexion.query(sql, [req.params.sede], (err ,result) =>{
+documentos.getSede = (req, res) => {
+  let sql = "Select * from documentos where sede = ?";
+  conexion.query(sql, [req.params.sede], (err, result) => {
     if (err) {
-      res.status(500).json({ error: "Error al obtener los documentos por sede = ?" });
+      res
+        .status(500)
+        .json({ error: "Error al obtener los documentos por sede = ?" });
       console.log(err);
       return;
     }
     agregarUpload(result);
     res.json(result);
     //console.log(result);
-  })
-}
+  });
+};
 
 //POST DOCUMENTOS
 documentos.post = (req, res) => {
   if (!req.file) {
-      res.status(400).json({ error: "No se ha subido ningún archivo" });
-      console.log(res);
-      return;
+    res.status(400).json({ error: "No se ha subido ningún archivo" });
+    console.log(res);
+    return;
   }
-  let año = parseInt(req.body.anho);  
+  let año = parseInt(req.body.anho);
   let data = [
-      req.body.tipo,
-      req.body.facultad,
-      req.body.carrera,
-      req.body.titulo,
-      req.body.autor,
-      año, 
-      req.body.sede,
-      req.file.filename 
+    req.body.tipo,
+    req.body.facultad,
+    req.body.carrera,
+    req.body.titulo,
+    req.body.autor,
+    año,
+    req.body.sede,
+    req.file.filename,
   ];
 
-  let sql = "INSERT INTO Documentos (tipo, facultad, carrera, titulo, autor, año, sede, ruta_pdf) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+  let sql =
+    "INSERT INTO Documentos (tipo, facultad, carrera, titulo, autor, año, sede, ruta_pdf) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
   conexion.query(sql, data, (err, result) => {
-      if (err) {
-          res.status(500).json({ error: "Error al ingresar los datos", err });
-          console.log(err);
-          return;
-      }
-      res.json(result);
-      console.log(data);
+    if (err) {
+      res.status(500).json({ error: "Error al ingresar los datos", err });
+      console.log(err);
+      return;
+    }
+    res.json(result);
+    console.log(data);
   });
 };
 
-// //PUT DOCUMENTOS
-// documentos.put = (req, res) => {
-//   if (!req.file) {
-//     let sql = "INSERT INTO Documentos (tipo, facultad, carrera, titulo, autor, año, sede) VALUES (?, ?, ?, ?, ?, ?, ?)";      
-//   }
-//   let año = parseInt(req.body.anho);  
-//   let data = [
-//       req.body.tipo,
-//       req.body.facultad,
-//       req.body.carrera,
-//       req.body.titulo,
-//       req.body.autor,
-//       año, 
-//       req.body.sede,
-//       req.file.originalname 
-//   ];
+//PUT DOCUMENTOS
+documentos.put = (req, res) => {
+  let año = parseInt(req.body.anho);
+  let sql =
+    "UPDATE  Documentos SET tipo = ?, facultad = ?, carrera = ?, titulo = ?, autor = ?, año = ?, sede = ? ";
 
-//   let sql = "INSERT INTO Documentos (tipo, facultad, carrera, titulo, autor, año, sede, ruta_pdf) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+  let data = [
+    req.body.tipo,
+    req.body.facultad,
+    req.body.carrera,
+    req.body.titulo,
+    req.body.autor,
+    año,
+    req.body.sede,
+  ];
 
-//   conexion.query(sql, data, (err, result) => {
-//       if (err) {
-//           res.status(500).json({ error: "Error al ingresar los datos", err });
-//           console.log(err);
-//           return;
-//       }
-//       res.json(result);
-//       console.log(data);
-//   });
-// };
+  // Agregar la ruta del PDF solo si se envió un archivo adjunto
+  if (req.file) {
+    sql += ", ruta_pdf = ?";
+    data.push(req.file.filename);
+
+    conexion.query(
+      "SELECT ruta_pdf FROM documentos WHERE id_documento = ?",
+      [req.params.id],
+      (err, result) => {
+        if (err) {
+          res
+            .status(500)
+            .json({ error: "Error al obtener el documento existente", err });
+          console.log(err);
+          return;
+        }
+
+        if (result && result.length > 0 && result[0].ruta_pdf) {
+          let rutaPDFExistente = path.join(
+            __dirname,
+            "..",
+            "..",
+            "uploads",
+            result[0].ruta_pdf
+          );
+          fs.unlink(rutaPDFExistente, (err) => {
+            if (err) {
+              console.log("Error al eliminar el archivo PDF existente", err);
+            } else {
+              console.log("Archivo PDF existente eliminado con éxito");
+            }
+          });
+        }
+      }
+    );
+  }
+  data.push(req.params.id);
+  sql += "WHERE id_documento = ?";
+
+  conexion.query(sql, data, (err, result) => {
+    if (err) {
+      res.status(500).json({ error: "Error al actualizar los datos", err });
+      console.log(err);
+      return;
+    }
+    res.json(result);
+    //console.log(data);
+  });
+};
+
+//DELETE
+documentos.delete = (req, res) => {  
+    conexion.query("SELECT ruta_pdf FROM documentos WHERE id_documento = ?",
+      [req.params.id_del],
+      (err, result) => {
+        if (err) {
+          res.status(500).json({ error: "Error al obtener el documento existente", err });
+          console.log(err);
+          return;
+        }
+
+        if (result && result.length > 0 && result[0].ruta_pdf) {
+          let rutaPDFExistente = path.join(
+            __dirname,
+            "..",
+            "..",
+            "uploads",
+            result[0].ruta_pdf
+          );
+          fs.unlink(rutaPDFExistente, (err) => {
+            if (err) {
+              console.log("Error al eliminar el archivo PDF existente", err);
+            } else {
+              console.log("Archivo PDF existente eliminado con éxito");
+            }
+          });
+        }
+      }
+    );
+  let sql = "Delete  from documentos where id_documento = ?";
+  conexion.query(sql, [req.params.id_del], (err, result) => {
+    if (err) {
+      res.status(500).json({ error: "Error al eliminar el documento" });
+      console.log(err);
+      return;
+    }    
+    res.json(result)
+    //console.log(result);
+  });
+};
+
 module.exports = documentos;
