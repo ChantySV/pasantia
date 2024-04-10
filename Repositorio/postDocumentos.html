@@ -6,10 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="stylesPostDocumentos.css">
+    <link rel="stylesheet" href="styleVentana.css">
 </head>
 
 <body>
     <h1 class="title">Repositorio</h1>
+
     <form method="POST" id="postDocumentos" enctype="multipart/form-data">
 
         <label for="tipo">Tipo:</label>
@@ -29,19 +31,19 @@
         <input type="text" id="facultad" name="facultad" required><br><br>
 
         <label for="carrera">Carrera:</label>
-        <select name="carrera" id="carrera">                            
+        <select name="carrera" id="carrera">
             <option value="Administración de Empresas">Administración de Empresas</option>
             <option value="Derecho">Derecho</option>
-            <option value="Contabiliduria Publica">Contaduría Publica</option>
+            <option value="Contabiliduria Publica">Contabiliduria Publica</option>
             <option value="Ingeniería Comercial">Ingeniería Comercial</option>
             <option value="Ciencias de la Comunicación">Ciencias de la Comunicación</option>
-            <option value="Gestión del Turismo">Gestión del Turismo</option>            
+            <option value="Gestión del Turismo">Gestión del Turismo</option>
             <option value="Psicología">Psicología</option>
             <option value="Ingeniería de Sistemas">Ingeniería de Sistemas</option>
             <option value="Ingeniería en Gestión Petrolera">Ingeniería en Gestión Petrolera</option>
             <option value="Ingeniería en Redes y Telecomunicaciones">Ingeniería en Redes y Telecomunicaciones</option>
             <option value="Ingeniería Industrial">Ingeniería Industrial</option>
-        </select><br><br>        
+        </select><br><br>
 
         <label for="titulo">Título:</label>
         <input type="text" id="titulo" name="titulo" required><br><br>
@@ -71,21 +73,89 @@
         <input type="submit" value="Guardar" class="button">
     </form>
 
-    <table>
+    <table id="tablaDatos">
         <thead>
             <tr>
-                <th>Tipo</th>
+                <th>Modalidad de Titulacion</th>
+                <th>Facultad</th>
                 <th>Carrera</th>
                 <th>Título</th>
                 <th>Autor</th>
+                <th>Sede</th>
                 <th>Año</th>
-                <th>Ruta PDF</th>            
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody id="lista-pdfs">
-            
+
         </tbody>
     </table>
+    <div id="edit-ventanaEmergente" class="ventanaEmergente">
+        <div class="contenido">
+            <span class="cerrar" id="edit-cerrarVentana">&times;</span>
+            <h2>Editar Documento</h2>
+            <form id="edit-formularioEditarDocumento">
+                <input type="hidden" id="edit-id_documento" name="id_documento" value="">
+
+                <label for="edit-tipo">Tipo:</label>
+                <select id="edit-tipo" name="tipo">
+                    <option value="">Seleccionar Modalidad De Titulacion</option> 
+                    <option value="Tesis">Tesis</option>
+                    <option value="Proyecto de Grado">Proyecto de Grado</option>
+                    <option value="Trabajo Dirigido">Trabajo Dirigido</option>
+                  </select>
+
+                <label for="edit-facultad">Facultad:</label>
+                <input type="text" id="edit-facultad" name="facultad">
+                
+                <label for="edit-carrera">Carrera:</label>
+                <select id="edit-carrera" name="carrera">
+                    <option value="">Seleccionar Carrera</option> 
+                    <option value="Ingenieria de Sistemas">Ingeniería de Sistemas</option>
+                    <option value="Medicina">Medicina</option>
+                    <option value="Derecho">Derecho</option>
+                    <option value="Administración de Empresas">Administración de Empresas</option>
+                    <option value="Psicología">Psicología</option>
+                    <option value="Ingeniería Industrial">Ingeniería Industrial</option>
+                    <option value="Contaduría Publica">Contaduría Publica</option>
+                    <option value="Ingeniería Comercial">Ingeniería Comercial</option>
+                    <option value="Marketing y Publicidad">Marketing y Publicidad</option>
+                    <option value="Ciencias de la Comunicación Social">Ciencias de la Comunicación Social</option>
+                    <option value="Psicopedagogía">Psicopedagogía</option>
+                    <option value="Relaciones Internacionales">Relaciones Internacionales</option>
+                    <option value="Gestión del Turismo">Gestión del Turismo</option>
+                  </select>
+
+                <label for="edit-titulo">Título:</label>
+                <input type="text" id="edit-titulo" name="titulo">
+
+                <label for="edit-autor">Autor:</label>
+                <input type="text" id="edit-autor" name="autor">
+
+                <label for="edit-anho">Año:</label>
+                <input type="text" id="edit-anho" name="anho">
+
+                <label for="edit-sede">Sede:</label>
+                <select id="edit-sede" name="sede">
+                    <option value="">Seleccionar Sede</option>
+                    <option value="La Paz">La Paz</option>
+                    <option value="Santa Cruz">Santa Cruz</option>
+                    <option value="Tarija">Tarija</option>
+                    <option value="Potosí">Potosí</option>
+                    <option value="Cochabamba">Cochabamba</option>
+                    <option value="Trinidad">Trinidad</option>
+                    <option value="Sucre">Sucre</option>
+                    <option value="Oruro">Oruro</option>
+                    <option value="Cobija">Cobija</option>
+                  </select><br>
+
+                  <label for="pdf">PDF:</label>
+                  <input type="file" id="edit-pdf" name="pdf" accept=".pdf"><br><br>          
+                <button type="submit">Guardar Cambios</button>
+            </form>
+        </div>
+    </div>
+
 </body>
 <script src="scriptPostDocumentos.js"></script>
 

@@ -11,14 +11,14 @@ CREATE TABLE Documentos (
     carrera VARCHAR(255) not null,    
     titulo VARCHAR(255),
     autor VARCHAR(255) not null,
-    año YEAR not null,
+    anho YEAR not null,
     sede varchar(255) not null,
     ruta_pdf VARCHAR(255) not null
 );
 
 
-INSERT INTO Documentos (tipo, facultad, carrera, titulo, autor, año, sede, ruta_pdf)
-VALUES ('Proyecto de grado', 'Ingenieria', 'Ingeniería en redes y telecomunicaciones', 
+INSERT INTO Documentos (tipo, facultad, carrera, titulo, autor, anho, sede, ruta_pdf)
+VALUES ('Proyecto de Grado', 'Ingenieria', 'Ingeniería en redes y telecomunicaciones', 
 'DISEÑO DE RED CON ERBIUM DOPED FIBER AMPLIFIER 
 Y TECNOLOGÍA GIGABIT PASSIVE OPTICAL NETWORK CON SERVICIOS DE BANDA ANCHA EN LA ZONA SAN ANTONIO ALTO
 CASO: COOPERATIVA COTEL R.L.', 

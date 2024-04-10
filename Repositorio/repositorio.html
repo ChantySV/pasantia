@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Repositorio de PDF</title>
+  <link rel="stylesheet" href="./repositorio.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="ventana_script.js"></script>
+  <link rel="stylesheet" href="styleRepositorio.css">
+
+</head>
+
+
+<body>
+  <div class="modal">
+    <div class="modal-content">
+      <p>Bienvenidos al Repositorio de Documentos de la Universidad UPDS,
+        Aquí encontrarán una amplia colección de tesis, proyectos de grado, 
+        trabajos dirigidos y otros documentos académicos realizados por nuestros estudiantes.
+        Este repositorio es una valiosa fuente de conocimiento e investigación.
+        Explora y aprovecha este espacio para inspirarte, investigar y enriquecer tus propios proyectos. 
+        Agradecemos a todos los estudiantes que han contribuido con sus trabajos.</p>
+      <span class="close-modal">&times;</span>
+    </div>
+  </div>
+
+
+  <div class="hero">
+    <nav>
+      <h2 class="logo">UP<span>DS</span></h2>
+
+        <div class="dropdown">
+          <h3>Carreras</h3>
+          <select id="parametroCarrera" onchange="enviarParametro('carrera')" onmouseover="mostrarOpciones(this)">
+            <option value="">Seleccionar Carrera</option> 
+            <option value="Ingenieria de Sistemas">Ingeniería de Sistemas</option>
+            <option value="Medicina">Medicina</option>
+            <option value="Derecho">Derecho</option>
+            <option value="Administración de Empresas">Administración de Empresas</option>
+            <option value="Psicología">Psicología</option>
+            <option value="Ingeniería Industrial">Ingeniería Industrial</option>
+            <option value="Contaduría Publica">Contaduría Publica</option>
+            <option value="Ingeniería Comercial">Ingeniería Comercial</option>
+            <option value="Marketing y Publicidad">Marketing y Publicidad</option>
+            <option value="Ciencias de la Comunicación Social">Ciencias de la Comunicación Social</option>
+            <option value="Psicopedagogía">Psicopedagogía</option>
+            <option value="Relaciones Internacionales">Relaciones Internacionales</option>
+            <option value="Gestión del Turismo">Gestión del Turismo</option>
+          </select>
+        </div>
+
+        <div class="dropdown">
+          <h3>Modalidad De Titulacion</h3>
+          <select id="parametroTipo" onchange="enviarParametro('tipo')">
+            <option value="">Seleccionar Modalidad De Titulacion</option> 
+            <option value="Tesis">Tesis</option>
+            <option value="Proyecto de Grado">Proyecto de Grado</option>
+            <option value="Trabajo Dirigido">Trabajo Dirigido</option>
+          </select>
+        </div>
+
+        <div class="dropdown">
+          <h3>Sede</h3>
+          <select id="parametroSede" onchange="enviarParametro('sede')">
+            <option value="">Seleccionar Sede</option>
+            <option value="La Paz">La Paz</option>
+            <option value="Santa Cruz">Santa Cruz</option>
+            <option value="Tarija">Tarija</option>
+            <option value="Potosí">Potosí</option>
+            <option value="Cochabamba">Cochabamba</option>
+            <option value="Trinidad">Trinidad</option>
+            <option value="Sucre">Sucre</option>
+            <option value="Oruro">Oruro</option>
+            <option value="Cobija">Cobija</option>
+          </select>
+        </div>
+      
+      <button type="button">Ingresar</button>
+    </nav>
+    <script>
+const modalidadElements = document.querySelectorAll('.tipo a');
+const sedeElements = document.querySelectorAll('.sedes a');
+
+modalidadElements.forEach((element) => {
+  element.addEventListener('click', filtrarPorModalidad);
+});
+
+sedeElements.forEach((element) => {
+  element.addEventListener('click', filtrarPorSede);
+});
+
+
+function filtrarPorModalidad(event) {
+  event.preventDefault();
+
+  const modalidadSeleccionada = event.target.textContent; 
+  const documentos = document.querySelectorAll('#lista-pdfs li');
+
+  documentos.forEach((documento) => {
+    const modalidadDocumento = documento.getAttribute('data-modalidad');
+
+    if (modalidadDocumento === modalidadSeleccionada) {
+      documento.style.display = 'block'; 
+      documento.style.display = 'none'; 
+    }
+  });
+}
+
+
+function filtrarPorSede(event) {
+  event.preventDefault();
+
+  const sedeSeleccionada = event.target.textContent;
+  const documentos = document.querySelectorAll('#lista-pdfs li');
+
+  documentos.forEach((documento) => {
+    const sedeDocumento = documento.getAttribute('data-sede');
+
+    if (sedeDocumento === sedeSeleccionada) {
+      documento.style.display = 'block'; // Mostrar el documento si coincide con la sede seleccionada
+    } else {
+      documento.style.display = 'none'; // Ocultar el documento si no coincide con la sede seleccionada
+    }
+  });
+}</script>
+    <script>// Obtén los elementos de modalidad y sede por su ID
+      const modalidadTesisElement = document.getElementById('modalidad-tesis');
+      const modalidadProyectoElement = document.getElementById('modalidad-proyecto');
+      const modalidadTrabajoElement = document.getElementById('modalidad-trabajo');
+      
+      const sedeLaPazElement = document.getElementById('sede-lapaz');
+      const sedeCochabambaElement = document.getElementById('sede-cochabamba');
+      const sedeSantaCruzElement = document.getElementById('sede-santacruz');
+      
+      // Agrega controladores de eventos a los elementos de modalidad y sede
+      modalidadTesisElement.addEventListener('click', filtrarPorModalidad);
+      modalidadProyectoElement.addEventListener('click', filtrarPorModalidad);
+      modalidadTrabajoElement.addEventListener('click', filtrarPorModalidad);
+      
+      sedeLaPazElement.addEventListener('click', filtrarPorSede);
+      sedeCochabambaElement.addEventListener('click', filtrarPorSede);
+      sedeSantaCruzElement.addEventListener('click', filtrarPorSede);</script>
+
+    <div class="carousel">
+      <div class="carousel-inner">
+        <img class="carousel-image" src="./public/img/anuncio.png" alt="Imagen 1">
+        <img class="carousel-image" src="./public/img/anuncios 2.jpg" alt="Imagen 2">
+        <img class="carousel-image" src="./public/img/anuncios 3.jpg" alt="Imagen 3">
+      </div>
+      <div class="carousel-nav">
+        <button class="carousel-prev">&#8249;</button>
+        <button class="carousel-next">&#8250;</button>
+      </div>
+    </div>
+
+
+    <script>
+      const carouselInner = document.querySelector('.carousel-inner');
+      const prevButton = document.querySelector('.carousel-prev');
+      const nextButton = document.querySelector('.carousel-next');
+      let currentIndex = 0;
+    
+      function showImage(index) {
+        // Calcula la distancia para mover el carrusel
+        const moveDistance = -index * 100;
+    
+        // Mueve el carrusel
+        carouselInner.style.transform = `translateX(${moveDistance}%)`;
+      }
+    
+      function showNextImage() {
+        currentIndex = (currentIndex + 1) % carouselInner.children.length;
+        showImage(currentIndex);
+      }
+    
+      function showPrevImage() {
+        currentIndex = (currentIndex - 1 + carouselInner.children.length) % carouselInner.children.length;
+        showImage(currentIndex);
+      }
+    
+      // Inicia el carrusel automáticamente cada 15 segundos
+      setInterval(showNextImage, 15000);
+    
+      // Agrega eventos a los botones de flechas
+      prevButton.addEventListener('click', showPrevImage);
+      nextButton.addEventListener('click', showNextImage);
+    </script>
+
+    <section class="contenedor-pdfs">
+      <h2>Documentos</h2>
+      <ul id="lista-pdfs">
+      </ul>
+    </section>
+
+    <div id="pdfPreview"></div>
+
+    <div class="search-bar">
+      <input type="text" id="buscar-input" placeholder="Buscar Documento">
+      <button type="submit" onclick="buscarDocumentos()">Buscar</button>
+    </div>
+
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.min.js"></script>
+  <script src="scriptRepositorio.js"></script>
+  <script src="ventana_script.js"></script>
+</body>
+
+</html>

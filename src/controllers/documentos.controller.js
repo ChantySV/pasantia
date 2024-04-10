@@ -81,20 +81,20 @@ documentos.post = (req, res) => {
     console.log(res);
     return;
   }
-  let año = parseInt(req.body.anho);
+  let anho = parseInt(req.body.anho);
   let data = [
     req.body.tipo,
     req.body.facultad,
     req.body.carrera,
     req.body.titulo,
     req.body.autor,
-    año,
+    anho,
     req.body.sede,
     req.file.filename,
   ];
 
   let sql =
-    "INSERT INTO Documentos (tipo, facultad, carrera, titulo, autor, año, sede, ruta_pdf) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    "INSERT INTO Documentos (tipo, facultad, carrera, titulo, autor, anho, sede, ruta_pdf) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
   conexion.query(sql, data, (err, result) => {
     if (err) {
@@ -109,9 +109,9 @@ documentos.post = (req, res) => {
 
 //PUT DOCUMENTOS
 documentos.put = (req, res) => {
-  let año = parseInt(req.body.anho);
+  let anho = parseInt(req.body.anho);
   let sql =
-    "UPDATE  Documentos SET tipo = ?, facultad = ?, carrera = ?, titulo = ?, autor = ?, año = ?, sede = ? ";
+    "UPDATE  Documentos SET tipo = ?, facultad = ?, carrera = ?, titulo = ?, autor = ?, anho = ?, sede = ? ";
 
   let data = [
     req.body.tipo,
@@ -119,7 +119,7 @@ documentos.put = (req, res) => {
     req.body.carrera,
     req.body.titulo,
     req.body.autor,
-    año,
+    anho,
     req.body.sede,
   ];
 
