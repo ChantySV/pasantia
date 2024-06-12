@@ -1,10 +1,10 @@
-drop database if exists Repositorio;
+drop database if exists repositorio;
 
-CREATE DATABASE Repositorio;
+CREATE DATABASE repositorio;
 
-USE Repositorio;
+USE repositorio;
 
-CREATE TABLE Documentos (
+CREATE TABLE documentos (
     id_documento INT AUTO_INCREMENT PRIMARY KEY,
     tipo VARCHAR(255) not null,
     facultad varchar(255) not null,
@@ -17,18 +17,18 @@ CREATE TABLE Documentos (
 );
 
 
-INSERT INTO Documentos (tipo, facultad, carrera, titulo, autor, anho, sede, ruta_pdf)
+INSERT INTO documentos (tipo, facultad, carrera, titulo, autor, anho, sede, ruta_pdf)
 VALUES ('Proyecto de Grado', 'Ingenieria', 'Ingeniería en redes y telecomunicaciones', 
 'DISEÑO DE RED CON ERBIUM DOPED FIBER AMPLIFIER 
 Y TECNOLOGÍA GIGABIT PASSIVE OPTICAL NETWORK CON SERVICIOS DE BANDA ANCHA EN LA ZONA SAN ANTONIO ALTO
 CASO: COOPERATIVA COTEL R.L.', 
 'Valeria Iris Tapia Moreno', 2022, 'La Paz', 'proyecto1.pdf');
 
-create table usuarios (
+/*create table usuarios (
 id_usuario int auto_increment primary key,
 nombre varchar (255),
 contraseña varchar (60)
 );
 
 insert into usuarios  (nombre, contraseña)
-values('sorel', '1234');
+values('sorel', '1234');*/

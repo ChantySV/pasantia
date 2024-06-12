@@ -1,9 +1,9 @@
 const fs = require("fs");
 const path = require("path");
 
-const conexion = require("../config/database");
+const conexion = require("../config/databaseConexion");
 const documentos = {};
-//ADD UPLOAD
+
 function agregarUpload(data) {
   data.forEach((data) => {
     // Ejemplo de modificación: Agregar una propiedad "status" a cada objeto
