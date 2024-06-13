@@ -13,7 +13,7 @@ async function createDatabase() {
     const dbName = process.env.DB_NAME;
 
     await connection.query(`CREATE DATABASE IF NOT EXISTS \`${dbName}\`;`);
-    console.log(`Database '${dbName}' creado o ya existe.`);
+    console.log(`Base de datos '${dbName}' creada.`);
 
     await connection.end();
   } catch (err) {

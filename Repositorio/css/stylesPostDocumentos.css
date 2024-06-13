@@ -56,8 +56,14 @@ table {
 th,
 td {
     padding: 10px;
-    text-align: left;
+    text-align: center;
     border-bottom: 1px solid #ccc;
+}
+tr td  .titulo{
+  max-width: 200px; /* Ajusta según sea necesario */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;  
 }
 
 th {
@@ -108,3 +114,62 @@ tbody tr:nth-child(even) {
 .delete-button:hover {
     opacity: 0.8;
 }
+
+/* Mensaje de Modificacion */
+/* Estilos para el mensaje */
+#mensaje {
+    margin: 20px auto;
+    width: 400px;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    display: none; /* Inicialmente oculto */
+}
+
+/* Estilos para mensaje de éxito */
+#mensaje.success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Estilos para mensaje de error */
+#mensaje.error {
+    background-color: #f44336;
+    color: white;
+}
+/* Estilo para el campo de búsqueda */
+#busqueda {
+    width: 300px; /* Ajusta el ancho según tus necesidades */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin: 20px auto; /* Centra el campo horizontalmente */
+    display: block;
+  }
+  
+  /* Estilo para centrar la tabla */
+  #tablaDatos {
+    margin: 0 auto;
+    width: 90%; /* Ajusta el ancho máximo de la tabla según tus necesidades */
+    max-width: 1000px; /* Ancho máximo recomendado para la tabla */
+  }
+  
+  /* Estilo para las filas pares de la tabla */
+  #tablaDatos tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  /* Estilo para las celdas de la tabla */
+  #tablaDatos th,
+  #tablaDatos td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  /* Estilo para el título de la tabla */
+  #tablaDatos th {
+    background-color: #333;
+    color: white;
+  }
+  

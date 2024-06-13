@@ -10,5 +10,5 @@ router.get('/documentos/sede/:sede', controller.getSede)
 router.post('/documentos', upload.uploadPDF, controller.post)
 router.put('/documentos/put/:id', upload.uploadPDF, controller.put)
 router.delete('/documentos/delete/:id_del', controller.delete)
-
+router.get('/documentos/busqueda/:query', controller.search);
 module.exports = router

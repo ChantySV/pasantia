@@ -25,6 +25,27 @@ documentos.get = (req, res) => {
   });
 };
 
+// GET BARRA De BUSQUEDA
+documentos.search = (req, res) => {
+  const { query } = req.params;
+
+  if (!query) {
+    return res.status(400).json({ error: "Debe proporcionar un término de búsqueda" });
+  }
+
+  let sql = "SELECT * FROM documentos WHERE titulo LIKE ? OR autor LIKE ? OR LIKE ? ";
+  let params = [`%${query}%`, `%${query}%`];
+
+  conexion.query(sql, params, (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: "Error al realizar la búsqueda de documentos" });
+    }
+    const modifiedResult = agregarUpload(result);
+    return res.json(modifiedResult);
+  });
+};
+
+
 //GET CARRERA
 documentos.getCarrera = (req, res) => {
   let sql = "Select * from documentos where carrera = ?";
