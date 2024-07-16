@@ -37,7 +37,7 @@ Una vez que hayas clonado el repositorio y configurado el servidor backend, pued
 
 1. Iniciar la Aplicación: Ejecuta el siguiente comando en la raíz del proyecto para iniciar la aplicación:
 
-   npm start
+   npm run start
 
    Esto iniciará un servidor de desarrollo y abrirá automáticamente la aplicación en tu navegador predeterminado.
 

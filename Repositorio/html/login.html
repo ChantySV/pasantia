@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../css/styleLogin.css">
+    <style>        
+        @media only screen and (max-width: 600px) {
+            .login-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <h2>Iniciar Sesión</h2>
+        <form action="" id="login" method="post" autocomplete="off">
+            <label for="nombre">Nombre de usuario</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <label for="contrasenha">Contraseña</label>
+            <input type="contrasenha" id="contrasenha" name="contrasenha" required>
+            <button type="submit">Iniciar Sesión</button>
+        </form>
+    </div>
+</body>
+<script src="../js/scriptLogin.js"></script>
+</html>
