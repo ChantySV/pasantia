@@ -190,7 +190,6 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .then((data) => {
           console.log("Documento creado correctamente:", data);
-          // Aquí podrías realizar alguna acción adicional si es necesario
         })
         .catch((error) => {
           console.error("Error al crear el documento:", error);
@@ -198,67 +197,67 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-// Función para actualizar opciones de carrera basado en la facultad seleccionada
-function actualizarOpcionesCarrera(facultadSelect, carreraSelect) {
-  const opcionesCarrera = {
-    "Ciencias Jurídicas": ["Derecho"],
-    "Ciencias Empresariales": [
-      "Administración de Empresas",
-      "Contaduría Publica",
-      "Ingeniería Comercial",
-      "Marketing y Publicidad",
-    ],
-    "Ciencias Sociales": [
-      "Ciencias de la Comunicación Social",
-      "Psicología",
-      "Psicopedagogía",
-      "Relaciones Internacionales",
-      "Gestión del Turismo",
-    ],
-    Ingeniería: [
-      "Ingeniería de Sistemas",
-      "Ingeniería Industrial",
-      "Ingeniería en Gestíon Petrolera",
-      "Ingeniería en Redes y Telecomunicaciones",
-      "Ingeniería Civil",
-      "Ingeniería en Gestíon Ambiental",
-    ],
-    "Ciencias de la Salud": ["Medicina", "Fisioterapia y Kinesiologia"],
-  };
+  // Función para actualizar opciones de carrera basado en la facultad seleccionada
+  function actualizarOpcionesCarrera(facultadSelect, carreraSelect) {
+    const opcionesCarrera = {
+      "Ciencias Jurídicas": ["Derecho"],
+      "Ciencias Empresariales": [
+        "Administración de Empresas",
+        "Contaduría Publica",
+        "Ingeniería Comercial",
+        "Marketing y Publicidad",
+      ],
+      "Ciencias Sociales": [
+        "Ciencias de la Comunicación Social",
+        "Psicología",
+        "Psicopedagogía",
+        "Relaciones Internacionales",
+        "Gestión del Turismo",
+      ],
+      Ingeniería: [
+        "Ingeniería de Sistemas",
+        "Ingeniería Industrial",
+        "Ingeniería en Gestíon Petrolera",
+        "Ingeniería en Redes y Telecomunicaciones",
+        "Ingeniería Civil",
+        "Ingeniería en Gestíon Ambiental",
+      ],
+      "Ciencias de la Salud": ["Medicina", "Fisioterapia y Kinesiologia"],
+    };
 
-  const selectedFacultad = facultadSelect.value;
-  const carreras = opcionesCarrera[selectedFacultad] || [];
+    const selectedFacultad = facultadSelect.value;
+    const carreras = opcionesCarrera[selectedFacultad] || [];
 
-  // Limpiar y actualizar las opciones de carrera
-  carreraSelect.innerHTML = '<option value="">Seleccionar Carrera</option>';
-  carreras.forEach(function (carrera) {
-    const option = document.createElement("option");
-    option.value = carrera;
-    option.textContent = carrera;
-    carreraSelect.appendChild(option);
+    // Limpiar y actualizar las opciones de carrera
+    carreraSelect.innerHTML = '<option value="">Seleccionar Carrera</option>';
+    carreras.forEach(function (carrera) {
+      const option = document.createElement("option");
+      option.value = carrera;
+      option.textContent = carrera;
+      carreraSelect.appendChild(option);
+    });
+  }
+
+  // Obtener los elementos select de facultad y carrera en ambos formularios
+  const postFacultadSelect = document.getElementById("facultad");
+  const postCarreraSelect = document.getElementById("carrera");
+
+  const editFacultadSelect = document.getElementById("edit-facultad");
+  const editCarreraSelect = document.getElementById("edit-carrera");
+
+  // Evento change para actualizar las opciones de carrera en el formulario de creación
+  postFacultadSelect.addEventListener("change", function () {
+    actualizarOpcionesCarrera(postFacultadSelect, postCarreraSelect);
   });
-}
 
-// Obtener los elementos select de facultad y carrera en ambos formularios
-const postFacultadSelect = document.getElementById("facultad");
-const postCarreraSelect = document.getElementById("carrera");
+  // Evento change para actualizar las opciones de carrera en el formulario de edición
+  editFacultadSelect.addEventListener("change", function () {
+    actualizarOpcionesCarrera(editFacultadSelect, editCarreraSelect);
+  });
 
-const editFacultadSelect = document.getElementById("edit-facultad");
-const editCarreraSelect = document.getElementById("edit-carrera");
-
-// Evento change para actualizar las opciones de carrera en el formulario de creación
-postFacultadSelect.addEventListener("change", function () {
+  // Función inicial para establecer las opciones de carrera en ambos formularios
   actualizarOpcionesCarrera(postFacultadSelect, postCarreraSelect);
-});
-
-// Evento change para actualizar las opciones de carrera en el formulario de edición
-editFacultadSelect.addEventListener("change", function () {
   actualizarOpcionesCarrera(editFacultadSelect, editCarreraSelect);
-});
-
-// Función inicial para establecer las opciones de carrera en ambos formularios
-actualizarOpcionesCarrera(postFacultadSelect, postCarreraSelect);
-actualizarOpcionesCarrera(editFacultadSelect, editCarreraSelect);
 });
 // Función para filtrar la tabla por título
 function filtrarTabla() {

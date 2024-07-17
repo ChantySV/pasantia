@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario y Tabla</title>
+    <link rel="stylesheet" href="../css/styleUsuarios.css">
+</head>
+<body>
+    <div class="container">
+        <h2 class="title">Formulario de Datos</h2>
+        <form id="postUsuarios" action="#">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <label for="contrasenha">Contraseña:</label>
+            <input type="text" id="contrasenha" name="contrasenha" required>
+            <input type="submit" value="Guardar">
+        </form>
+    </div>
+
+    <div id="mensaje" class="success"></div>
+
+    <table id="tablaUsuarios">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>                                
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>            
+            <!-- Filas de la tabla generadas dinámicamente por JavaScript -->
+        </tbody>
+    </table>
+
+    <!-- Ventana emergente de edición -->
+    <div id="edit-ventanaEmergente" class="ventana-emergente">
+        <div class="ventana-contenido">
+            <span id="edit-cerrarVentana" class="cerrar">&times;</span>
+            <h2>Editar Usuario</h2>
+            <form id="edit-formularioEditarUsuario" action="#">
+                <input type="hidden" id="edit-id_usuario" name="id_usuario">
+                <label for="edit-nombre">Nombre:</label>
+                <input type="text" id="edit-nombre" name="nombre" required>
+                <label for="edit-contrasenha">Contraseña::</label>
+                <input type="text" id="edit-contrasenha" name="contrasenha" required>
+                <input type="submit" value="Actualizar">
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/scriptUsuarios.js"></script>
+</body>
+</html>
