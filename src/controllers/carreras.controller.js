@@ -13,6 +13,42 @@ carreras.getCarreras = (req, res) => {
   });
 };
 
+// GET CARRERAS POR FACULTAD
+carreras.getCarrerasPorFacultad = (req, res) => {
+  const idFacultad = req.params.id; // Obtener el parámetro de la solicitud
+    
+  if (!idFacultad) {
+    return res.status(400).json({ error: "Se debe proporcionar el ID de la facultad" });
+  }
+  
+  // Consulta SQL para obtener las carreras de una facultad específica
+  let sql = `
+   SELECT nombre AS nombreCarrera, id_carrera  
+    FROM carreras 
+    WHERE id_facultad_fk = ?;
+  `;
+  
+  conexion.query(sql, [idFacultad], (err, result) => {
+    if (err) {
+      res.status(500).json({ error: "Error al obtener las Carreras" });
+      return;
+    }
+    res.json(result);
+  });
+};
+
+// GET CARRERA Y FACULTAD
+carreras.getCarrerasFacultad = (req, res) => {
+  let sql = "SELECT carreras.nombre nombreCarrera, facultades.nombre nombreFacultad FROM carreras INNER JOIN facultades ON carreras.id_facultad_fk = facultades.id_facultad;";
+  conexion.query(sql, (err, result) => {
+    if (err) {
+      res.status(500).json({ error: "Error al obtener las Carreras y Su Facultad" });
+      return;
+    }
+    res.json(result);
+  });
+};
+
 // POST CARRERAS
 carreras.postCarreras = (req, res) => {
   let { nombre, id_facultad_fk } = req.body;

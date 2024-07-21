@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tipos</title>
+    <link rel="stylesheet" href="../css/styleAdmin.css">
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><a href="./repositorio.html">Inicio</a></li>
+            <li><a href="./postDocumentos.html">Documentos</a></li>
+            <li><a href="./facultades.html">Facultades</a></li>
+            <li><a href="./tipos.html">Tipos</a></li>
+            <li><a href="./carreras.html">Carreras</a></li>
+            <li><a href="./usuarios.html">Usuarios</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h2 class="title">Formulario de Tipos</h2>
+        <form id="postTipos" action="#">
+            <label for="nombre">Nombre:</label>
+            <input type="text" id="nombre" name="nombre" required>
+            <input type="submit" value="Guardar">
+        </form>
+    </div>
+
+    <div id="mensaje" class="success"></div>
+
+    <table id="tablaTipos">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Filas de la tabla generadas dinámicamente por JavaScript -->
+        </tbody>
+    </table>
+
+    <!-- Ventana emergente de edición -->
+    <div id="edit-ventanaEmergente" class="ventana-emergente">
+        <div class="ventana-contenido">
+            <span id="edit-cerrarVentana" class="cerrar">&times;</span>
+            <h2>Editar Tipo</h2>
+            <form id="edit-formularioEditarTipo" action="#">
+                <input type="hidden" id="edit-id_tipo" name="id_tipo">
+                <label for="edit-nombre">Nombre:</label>
+                <input type="text" id="edit-nombre" name="nombre" required>
+                <input type="submit" value="Actualizar">
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/scriptTipos.js"></script>
+</body>
+</html>

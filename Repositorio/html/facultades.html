@@ -3,32 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario y Tabla</title>
-    <link rel="stylesheet" href="../css/styleUsuarios.css">
+    <title>Facultades</title>
+    <link rel="stylesheet" href="../css/styleAdmin.css">
 </head>
 <body>
+    <nav>
+        <ul>
+            <li><a href="./repositorio.html">Inicio</a></li>
+            <li><a href="./postDocumentos.html">Documentos</a></li>
+            <li><a href="./facultades.html">Facultades</a></li>
+            <li><a href="./tipos.html">Tipos</a></li>
+            <li><a href="./carreras.html">Carreras</a></li>
+            <li><a href="./usuarios.html">Usuarios</a></li>
+        </ul>
+    </nav>
+
     <div class="container">
-        <h2 class="title">Formulario de Datos</h2>
-        <form id="postUsuarios" action="#">
+        <h2 class="title">Formulario de Facultades</h2>
+        <form id="postFacultades" action="#">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
-            <label for="contrasenha">Contraseña:</label>
-            <input type="text" id="contrasenha" name="contrasenha" required>
             <input type="submit" value="Guardar">
         </form>
     </div>
 
     <div id="mensaje" class="success"></div>
 
-    <table id="tablaUsuarios">
+    <table id="tablaFacultades">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Nombre</th>                                
+                <th>Nombre</th>
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody>            
+        <tbody>
             <!-- Filas de la tabla generadas dinámicamente por JavaScript -->
         </tbody>
     </table>
@@ -37,18 +46,16 @@
     <div id="edit-ventanaEmergente" class="ventana-emergente">
         <div class="ventana-contenido">
             <span id="edit-cerrarVentana" class="cerrar">&times;</span>
-            <h2>Editar Usuario</h2>
-            <form id="edit-formularioEditarUsuario" action="#">
-                <input type="hidden" id="edit-id_usuario" name="id_usuario">
+            <h2>Editar Facultad</h2>
+            <form id="edit-formularioEditarFacultad" action="#">
+                <input type="hidden" id="edit-id_facultad" name="id_facultad">
                 <label for="edit-nombre">Nombre:</label>
                 <input type="text" id="edit-nombre" name="nombre" required>
-                <label for="edit-contrasenha">Contraseña::</label>
-                <input type="text" id="edit-contrasenha" name="contrasenha" required>
                 <input type="submit" value="Actualizar">
             </form>
         </div>
     </div>
 
-    <script src="../js/scriptUsuarios.js"></script>
+    <script src="../js/scriptFacultades.js"></script>
 </body>
 </html>

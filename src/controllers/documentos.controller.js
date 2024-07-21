@@ -24,6 +24,19 @@ documentos.get = (req, res) => {
   });
 };
 
+//GET GENERAL
+documentos.getVista = (req, res) => {
+  let sql = "SELECT d.id_documento, d.titulo, d.autor, d.sede, d.anho, d.ruta_pdf, t.nombre AS tipo_titulacion, f.nombre AS facultad, c.nombre AS carrera FROM documentos d LEFT JOIN tipos t ON d.id_tipo_fk = t.id_tipo LEFT JOIN carreras c ON d.id_carrera_fk = c.id_carrera LEFT JOIN facultades f ON c.id_facultad_fk = f.id_facultad WHERE (t.id_tipo IS NOT NULL OR d.id_tipo_fk IS NULL) AND (c.id_carrera IS NOT NULL OR d.id_carrera_fk IS NULL) AND (f.id_facultad IS NOT NULL OR c.id_facultad_fk IS NULL);";
+  conexion.query(sql, (err, result) => {
+    if (err) {
+      res.status(500).json({ error: "Error al obtener los documentos" });
+      return;
+    }
+    agregarUpload(result);
+    res.json(result);
+  });
+};
+
 // GET BARRA De BUSQUEDA
 documentos.search = (req, res) => {
   const { query } = req.params;
