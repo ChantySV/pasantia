@@ -1,7 +1,7 @@
 const conexion = require("../config/databaseConexion");
 const facultades = {};
 
-//GET GENERAL
+// GET GENERAL
 facultades.getFacultades = (req, res) => {
   let sql = "SELECT * FROM facultades";
   conexion.query(sql, (err, result) => {
@@ -13,40 +13,64 @@ facultades.getFacultades = (req, res) => {
   });
 };
 
-//POST FACULTADES
+// POST FACULTADES
 facultades.postFacultades = (req, res) => {
-  let data = [req.body.nombre];
+  let { nombre } = req.body;
 
-  let sql = "INSERT INTO facultades (nombre) VALUES (?)";
-
-  conexion.query(sql, data, (err, result) => {
+  // Verificar si el nombre ya está en uso
+  let checkSql = "SELECT * FROM facultades WHERE nombre = ?";
+  conexion.query(checkSql, [nombre], (err, result) => {
     if (err) {
-      res.status(500).json({ error: "Error al ingresar los datos", err });
-      //console.log(err);
+      res.status(500).json({ error: "Error al verificar el nombre", err });
       return;
     }
-    res.json(result);
-    //console.log(data);
+    if (result.length > 0) {
+      res.status(400).json({ error: "El nombre de la facultad ya está en uso" });
+      return;
+    }
+
+    // Insertar la nueva facultad
+    let sql = "INSERT INTO facultades (nombre) VALUES (?)";
+    conexion.query(sql, [nombre], (err, result) => {
+      if (err) {
+        res.status(500).json({ error: "Error al ingresar los datos", err });
+        return;
+      }
+      res.json(result);
+    });
   });
 };
 
-//PUT FACULTADES
+// PUT FACULTADES
 facultades.putFacultades = (req, res) => {
-  let data = [req.body.nombre, req.params.id];
-  let sql = "UPDATE  facultades SET nombre = ? WHERE id_facultad = ?";
+  let { nombre } = req.body;
+  let id_facultad = req.params.id;
 
-  conexion.query(sql, data, (err, result) => {
+  // Verificar si el nombre ya está en uso por otra facultad
+  let checkSql = "SELECT * FROM facultades WHERE nombre = ? AND id_facultad != ?";
+  conexion.query(checkSql, [nombre, id_facultad], (err, result) => {
     if (err) {
-      res.status(500).json({ error: "Error al actualizar los datos", err });
-      //console.log(err);
+      res.status(500).json({ error: "Error al verificar el nombre", err });
       return;
     }
-    res.json(result);
-    //console.log(data);
+    if (result.length > 0) {
+      res.status(400).json({ error: "El nombre de la facultad ya está en uso" });
+      return;
+    }
+
+    // Actualizar la facultad
+    let sql = "UPDATE facultades SET nombre = ? WHERE id_facultad = ?";
+    conexion.query(sql, [nombre, id_facultad], (err, result) => {
+      if (err) {
+        res.status(500).json({ error: "Error al actualizar los datos", err });
+        return;
+      }
+      res.json(result);
+    });
   });
 };
 
-//DELETE FACULTADES
+// DELETE FACULTADES
 facultades.deleteFacultades = (req, res) => {
   let sql = "DELETE FROM facultades WHERE id_facultad = ?";
   conexion.query(sql, req.params.id, (err, result) => {
@@ -56,7 +80,6 @@ facultades.deleteFacultades = (req, res) => {
       return;
     }
     res.json(result);
-    //console.log(result);
   });
 };
 

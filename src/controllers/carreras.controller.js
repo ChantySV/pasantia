@@ -1,7 +1,7 @@
 const conexion = require("../config/databaseConexion");
 const carreras = {};
 
-//GET GENERAL
+// GET GENERAL
 carreras.getCarreras = (req, res) => {
   let sql = "SELECT * FROM carreras";
   conexion.query(sql, (err, result) => {
@@ -13,40 +13,64 @@ carreras.getCarreras = (req, res) => {
   });
 };
 
-//POST CARRERAS
+// POST CARRERAS
 carreras.postCarreras = (req, res) => {
-  let data = [req.body.nombre ,req.body.id_facultad_fk];
+  let { nombre, id_facultad_fk } = req.body;
 
-  let sql = "INSERT INTO carreras (nombre, id_facultad_fk) VALUES (?, ?)";
-
-  conexion.query(sql, data, (err, result) => {
+  // Verificar si el nombre ya está en uso
+  let checkSql = "SELECT * FROM carreras WHERE nombre = ?";
+  conexion.query(checkSql, [nombre], (err, result) => {
     if (err) {
-      res.status(500).json({ error: "Error al ingresar los datos", err });
-      //console.log(err);
+      res.status(500).json({ error: "Error al verificar el nombre", err });
       return;
     }
-    res.json(result);
-    //console.log(data);
+    if (result.length > 0) {
+      res.status(400).json({ error: "El nombre de la carrera ya está en uso" });
+      return;
+    }
+
+    // Insertar la nueva carrera
+    let sql = "INSERT INTO carreras (nombre, id_facultad_fk) VALUES (?, ?)";
+    conexion.query(sql, [nombre, id_facultad_fk], (err, result) => {
+      if (err) {
+        res.status(500).json({ error: "Error al ingresar los datos", err });
+        return;
+      }
+      res.json(result);
+    });
   });
 };
 
-//PUT CARRERAS
+// PUT CARRERAS
 carreras.putCarreras = (req, res) => {
-  let data = [req.body.nombre, req.body.id_facultad_fk, req.params.id];
-  let sql = "UPDATE  carreras SET nombre = ?, id_facultad_fk = ? WHERE id_carrera = ?";
+  let { nombre, id_facultad_fk } = req.body;
+  let id_carrera = req.params.id;
 
-  conexion.query(sql, data, (err, result) => {
+  // Verificar si el nombre ya está en uso por otra carrera
+  let checkSql = "SELECT * FROM carreras WHERE nombre = ? AND id_carrera != ?";
+  conexion.query(checkSql, [nombre, id_carrera], (err, result) => {
     if (err) {
-      res.status(500).json({ error: "Error al actualizar los datos", err });
-      //console.log(err);
+      res.status(500).json({ error: "Error al verificar el nombre", err });
       return;
     }
-    res.json(result);
-    //console.log(data);
+    if (result.length > 0) {
+      res.status(400).json({ error: "El nombre de la carrera ya está en uso" });
+      return;
+    }
+
+    // Actualizar la carrera
+    let sql = "UPDATE carreras SET nombre = ?, id_facultad_fk = ? WHERE id_carrera = ?";
+    conexion.query(sql, [nombre, id_facultad_fk, id_carrera], (err, result) => {
+      if (err) {
+        res.status(500).json({ error: "Error al actualizar los datos", err });
+        return;
+      }
+      res.json(result);
+    });
   });
 };
 
-//DELETE CARRERAS
+// DELETE CARRERAS
 carreras.deleteCarreras = (req, res) => {
   let sql = "DELETE FROM carreras WHERE id_carrera = ?";
   conexion.query(sql, req.params.id, (err, result) => {
@@ -56,7 +80,6 @@ carreras.deleteCarreras = (req, res) => {
       return;
     }
     res.json(result);
-    //console.log(result);
   });
 };
 

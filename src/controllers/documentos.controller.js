@@ -5,7 +5,7 @@ const conexion = require("../config/databaseConexion");
 const documentos = {};
 
 function agregarUpload(data) {
-  data.forEach((data) => {    
+  data.forEach((data) => {
     data.ruta_pdf = "/uploads/" + data.ruta_pdf;
   });
   return data;
@@ -49,55 +49,6 @@ documentos.search = (req, res) => {
   });
 };
 
-//GET CARRERA
-documentos.getCarrera = (req, res) => {
-  let sql = "Select * from documentos where carrera = ?";
-  conexion.query(sql, [req.params.carrera], (err, result) => {
-    if (err) {
-      res.status(500).json({ error: "Error al obtener los documentos" });
-      //console.log(err);
-      return;
-    }
-    agregarUpload(result);
-    res.json(result);
-    //console.log(result);
-  });
-};
-
-//GET TIPO
-documentos.getTipo = (req, res) => {
-  let sql = "Select * from documentos where tipo = ?";
-  conexion.query(sql, [req.params.tipo], (err, result) => {
-    if (err) {
-      res
-        .status(500)
-        .json({ error: "Error al obtener los documentos por tipo" });
-      //console.log(err);
-      return;
-    }
-    agregarUpload(result);
-    res.json(result);
-    //console.log(result);
-  });
-};
-
-//GET SEDE
-documentos.getSede = (req, res) => {
-  let sql = "Select * from documentos where sede = ?";
-  conexion.query(sql, [req.params.sede], (err, result) => {
-    if (err) {
-      res
-        .status(500)
-        .json({ error: "Error al obtener los documentos por sede = ?" });
-      //console.log(err);
-      return;
-    }
-    agregarUpload(result);
-    res.json(result);
-    //console.log(result);
-  });
-};
-
 //POST DOCUMENTOS
 documentos.post = (req, res) => {
   if (!req.file) {
@@ -107,27 +58,27 @@ documentos.post = (req, res) => {
   }
   let anho = parseInt(req.body.anho);
   let data = [
-    req.body.tipo,
-    req.body.facultad,
-    req.body.carrera,
     req.body.titulo,
     req.body.autor,
     anho,
     req.body.sede,
     req.file.filename,
+    req.body.id_tipo_fk,
+    req.body.id_facultad_fk,
+    req.body.id_carrera_fk,
   ];
 
-  let sql =
-    "INSERT INTO Documentos (tipo, facultad, carrera, titulo, autor, anho, sede, ruta_pdf) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+  let sql = `INSERT INTO Documentos (titulo, autor, anho, sede, ruta_pdf, id_tipo_fk, id_facultad_fk, id_carrera_fk)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?)`;
 
   conexion.query(sql, data, (err, result) => {
     if (err) {
       res.status(500).json({ error: "Error al ingresar los datos", err });
-      //console.log(err);
+      console.log(err);
       return;
     }
     res.json(result);
-    //console.log(data);
+    console.log(data);
   });
 };
 
@@ -135,17 +86,17 @@ documentos.post = (req, res) => {
 documentos.put = (req, res) => {
   let anho = parseInt(req.body.anho);
   let sql =
-    "UPDATE  Documentos SET tipo = ?, facultad = ?, carrera = ?, titulo = ?, autor = ?, anho = ?, sede = ? ";
+    "UPDATE  Documentos SET id_tipo_fk = ?, id_facultad_fk = ?, id_carrera_fk = ?, titulo = ?, autor = ?, anho = ?, sede = ? ";
 
-  let data = [
-    req.body.tipo,
-    req.body.facultad,
-    req.body.carrera,
-    req.body.titulo,
-    req.body.autor,
-    anho,
-    req.body.sede,
-  ];
+    let data = [
+      req.body.id_tipo_fk,
+      req.body.id_facultad_fk,
+      req.body.id_carrera_fk,
+      req.body.titulo,
+      req.body.autor,
+      anho,                  
+      req.body.sede,         
+    ];
 
   // Agregar la ruta del PDF solo si se envió un archivo adjunto
   if (req.file) {
@@ -201,7 +152,7 @@ documentos.put = (req, res) => {
 documentos.delete = (req, res) => {
   conexion.query(
     "SELECT ruta_pdf FROM documentos WHERE id_documento = ?",
-    [req.params.id_del],
+    [req.params.id],
     (err, result) => {
       if (err) {
         res
@@ -229,8 +180,8 @@ documentos.delete = (req, res) => {
       }
     }
   );
-  let sql = "Delete  from documentos where id_documento = ?";
-  conexion.query(sql, [req.params.id_del], (err, result) => {
+  let sql = "Delete from documentos where id_documento = ?";
+  conexion.query(sql, [req.params.id], (err, result) => {
     if (err) {
       res.status(500).json({ error: "Error al eliminar el documento" });
       //console.log(err);
