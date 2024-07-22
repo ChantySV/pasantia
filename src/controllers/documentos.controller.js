@@ -24,12 +24,43 @@ documentos.get = (req, res) => {
   });
 };
 
-//GET GENERAL
+//GET VISTA
 documentos.getVista = (req, res) => {
   let sql = "SELECT d.id_documento, d.titulo, d.autor, d.sede, d.anho, d.ruta_pdf, t.nombre AS tipo_titulacion, f.nombre AS facultad, c.nombre AS carrera FROM documentos d LEFT JOIN tipos t ON d.id_tipo_fk = t.id_tipo LEFT JOIN carreras c ON d.id_carrera_fk = c.id_carrera LEFT JOIN facultades f ON c.id_facultad_fk = f.id_facultad WHERE (t.id_tipo IS NOT NULL OR d.id_tipo_fk IS NULL) AND (c.id_carrera IS NOT NULL OR d.id_carrera_fk IS NULL) AND (f.id_facultad IS NOT NULL OR c.id_facultad_fk IS NULL);";
   conexion.query(sql, (err, result) => {
     if (err) {
       res.status(500).json({ error: "Error al obtener los documentos" });
+      return;
+    }
+    agregarUpload(result);
+    res.json(result);
+  });
+};
+
+// GET DOCUMENTOS FILTRADOS
+documentos.getFiltrados = (req, res) => {
+  const { id_tipo_fk, id_carrera_fk, sede } = req.query;
+  
+  // Construir la consulta SQL dinámica según los filtros aplicados
+  let sql = "SELECT d.id_documento, d.titulo, d.autor, d.sede, d.anho, d.ruta_pdf, t.nombre AS tipo_titulacion, f.nombre AS facultad, c.nombre AS carrera FROM documentos d LEFT JOIN tipos t ON d.id_tipo_fk = t.id_tipo LEFT JOIN carreras c ON d.id_carrera_fk = c.id_carrera LEFT JOIN facultades f ON c.id_facultad_fk = f.id_facultad WHERE 1=1";
+  let params = [];
+
+  if (id_tipo_fk) {
+    sql += " AND d.id_tipo_fk = ?";
+    params.push(id_tipo_fk);
+  }
+  if (id_carrera_fk) {
+    sql += " AND d.id_carrera_fk = ?";
+    params.push(id_carrera_fk);
+  }
+  if (sede) {
+    sql += " AND d.sede = ?";
+    params.push(sede);
+  }
+
+  conexion.query(sql, params, (err, result) => {
+    if (err) {
+      res.status(500).json({ error: "Error al obtener los documentos filtrados" });
       return;
     }
     agregarUpload(result);

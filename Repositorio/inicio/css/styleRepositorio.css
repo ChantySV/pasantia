@@ -208,10 +208,12 @@ button:hover {
 /* Barra de búsqueda */
 
 .search-bar {
+  width: 100%;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 0px;
+  justify-content:center;
+  align-items:center;
+  padding: 60px;    
+  padding-right: 5px;
 }
 
 .search-bar input[type="text"] {
@@ -221,10 +223,6 @@ button:hover {
   border-radius: 20px;
   background-color: #f1f1f1;
 }
-
-.search-bar button[type="submit"] {
-  padding: 8px 12px;
-  background-color}
 
 .contenedor-pdfs {
   margin: 20px auto;  
