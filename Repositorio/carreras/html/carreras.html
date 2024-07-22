@@ -23,8 +23,11 @@
         <form id="postCarreras" action="#">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
-            <label for="id_facultad_fk">ID Facultad:</label>
-            <input type="number" id="id_facultad_fk" name="id_facultad_fk" required>
+            <label for="id_facultad_fk">Facultad:</label>
+            <select id="id_facultad_fk" name="id_facultad_fk" required>
+                <option value="">Selecciona una facultad</option>
+                <!-- Las opciones se llenarán dinámicamente aquí -->
+            </select>
             <input type="submit" value="Guardar">
         </form>
     </div>
@@ -33,10 +36,9 @@
 
     <table id="tablaCarreras">
         <thead>
-            <tr>
-                <th>ID</th>
+            <tr>                
                 <th>Nombre</th>
-                <th>ID Facultad</th>
+                <th>Facultad</th>
                 <th>Acciones</th>
             </tr>
         </thead>
@@ -55,7 +57,9 @@
                 <label for="edit-nombre">Nombre:</label>
                 <input type="text" id="edit-nombre" name="nombre" required>
                 <label for="edit-id_facultad_fk">ID Facultad:</label>
-                <input type="number" id="edit-id_facultad_fk" name="id_facultad_fk" required>
+                <select id="edit-id_facultad_fk" name="id_facultad_fk" required>
+                    <!-- Las opciones serán llenadas dinámicamente por JavaScript -->
+                </select>
                 <input type="submit" value="Actualizar">
             </form>
         </div>
