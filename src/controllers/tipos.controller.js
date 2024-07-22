@@ -13,6 +13,27 @@ tipos.getTipos = (req, res) => {
   });
 };
 
+// GET TIPO POR ID
+tipos.getTipoPorId = (req, res) => {
+  const idTipo = req.params.id;
+
+  if (!idTipo) {
+    return res.status(400).json({ error: "Se debe proporcionar el ID del tipo" });
+  }
+
+  let sql = "SELECT * FROM tipos WHERE id_tipo = ?";
+  conexion.query(sql, [idTipo], (err, result) => {
+    if (err) {
+      res.status(500).json({ error: "Error al obtener el Tipo de Titulación" });
+      return;
+    }
+    if (result.length === 0) {
+      return res.status(404).json({ error: "Tipo no encontrado" });
+    }
+    res.json(result[0]);
+  });
+};
+
 // POST TIPOS
 tipos.postTipos = (req, res) => {
   let { nombre } = req.body;
@@ -72,14 +93,35 @@ tipos.putTipos = (req, res) => {
 
 // DELETE TIPOS
 tipos.deleteTipos = (req, res) => {
-  let sql = "DELETE FROM tipos WHERE id_tipo = ?";
-  conexion.query(sql, req.params.id, (err, result) => {
+  const idTipo = req.params.id;
+
+  // Verificar si el tipo tiene dependencias
+  let checkDependenciesSql = `
+    SELECT COUNT(*) AS count
+    FROM documentos
+    WHERE id_tipo_fk = ?
+  `;
+
+  conexion.query(checkDependenciesSql, [idTipo], (err, result) => {
     if (err) {
-      res.status(500).json({ error: "Error al eliminar el Tipo de Titulacion" });
-      console.log(err);
+      res.status(500).json({ error: "Error al verificar dependencias", err });
       return;
     }
-    res.json(result);
+
+    if (result[0].count > 0) {
+      return res.status(400).json({ error: "La Modalidad de Titulacion tiene dependencias y no puede ser eliminado" });
+    }
+
+    // Si no hay dependencias, proceder con la eliminación
+    let sql = "DELETE FROM tipos WHERE id_tipo = ?";
+    conexion.query(sql, [idTipo], (err, result) => {
+      if (err) {
+        res.status(500).json({ error: "Error al eliminar el Tipo de Titulación" });
+        console.log(err);
+        return;
+      }
+      res.json(result);
+    });
   });
 };
 

@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function () {
             })
             .then(data => {                
                 console.log('Respuesta del servidor:', data);                
-                window.location.replace('./postDocumentos.html'); 
+                window.location.replace('../../documentos/html/postDocumentos.html'); 
             })
             .catch(error => {
                 console.error('Error:', error);                
