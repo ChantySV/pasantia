@@ -5,10 +5,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Repositorio de PDF</title>
-  <link rel="stylesheet" href="../css/styleRepositorio.css">
-  <link rel="icon" href="../../public/img/upds_logo.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/inicio/css/styleRepositorio.css">
+  <link rel="icon" href="/public/img/upds_logo.ico" type="image/x-icon">
 </head>
-
 
 <body>
 
@@ -18,14 +17,16 @@
 
       <div class="dropdown">
         <h3>Carreras</h3>
-        <select id="parametroCarrera" onchange="filtrarDocumentos()"">                                   
+        <select id="parametroCarrera">
+          <!-- Opciones llenadas dinámicamente -->
         </select>
       </div>
 
-      <div class=" dropdown">
-          <h3>Modalidad De Titulacion</h3>
-          <select id="parametroTipo" onchange="filtrarDocumentos()">
-          </select>
+      <div class="dropdown">
+        <h3>Modalidad De Titulación</h3>
+        <select id="parametroTipo">
+          <!-- Opciones llenadas dinámicamente -->
+        </select>
       </div>
 
       <div class="dropdown">
@@ -59,8 +60,7 @@
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.8.335/pdf.min.js"></script>
-  <script src="../js/scriptRepositorio.js"></script>
-
+  <script src="/inicio/js/scriptRepositorio.js"></script>
 </body>
 
 </html>

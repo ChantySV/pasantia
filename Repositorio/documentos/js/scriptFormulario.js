@@ -34,7 +34,7 @@ document.getElementById('edit-formularioEditarDocumento').addEventListener('subm
     const formData = new FormData(event.target);
     const idDocumento = formData.get('id_documento');
     
-    fetch(`http://localhost:5000/documentos/${idDocumento}`, {
+    fetch(`http://localhost:5000/documentos/put/${idDocumento}`, {
         method: 'PUT',
         body: formData
     })

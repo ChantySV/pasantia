@@ -1,3 +1,14 @@
+document.addEventListener("DOMContentLoaded", function () {
+  // Llenar selects al cargar la página
+  llenarSelectTipos();
+  llenarSelectCarreras();
+
+  // Configurar eventos de filtrado
+  document.getElementById("parametroCarrera").addEventListener("change", manejarCambioCarrera);
+  document.getElementById("parametroTipo").addEventListener("change", manejarCambioTipo);
+  document.getElementById("parametroSede").addEventListener("change", manejarCambioSede);
+});
+
 const contenedor_pdf = document.getElementById("lista-pdfs");
 let datosIniciales = []; // Variable para almacenar los datos iniciales
 
@@ -6,9 +17,8 @@ function cargaDocumentos(datos) {
 
   datos.forEach((dato) => {
     const listItem = document.createElement("li");
-    console.log(dato);
     listItem.innerHTML = `
-      <a href="../../../${dato.ruta_pdf}" target="_blank">
+      <a href="/${dato.ruta_pdf}" target="_blank">
         <div class="imagen-portada">
            <canvas id="pdf-canvas-${dato.id_documento}" class="pdf-canvas"></canvas>
         </div>
@@ -16,6 +26,7 @@ function cargaDocumentos(datos) {
           <h3 class="titulo">${dato.titulo}</h3>
           <p class="carrera">${dato.carrera}</p>
           <p class="autor">${dato.autor}</p>
+          <p class="tipo_titulacion">${dato.tipo_titulacion}</p>
           <p class="año">${dato.anho}</p>
           <p class="sede">${dato.sede}</p>
         </div>
@@ -23,9 +34,11 @@ function cargaDocumentos(datos) {
     `;
     contenedor_pdf.appendChild(listItem);
     const canvasId = `pdf-canvas-${dato.id_documento}`;
-    renderizarPrimeraPagina(`../../../${dato.ruta_pdf}`, canvasId);
+    renderizarPrimeraPagina(`/${dato.ruta_pdf}`, canvasId);
+    console.log(dato);
   });
 }
+
 function renderizarPrimeraPagina(url, canvasId) {
   pdfjsLib
     .getDocument(url)
@@ -68,12 +81,6 @@ fetch("http://localhost:5000/documentos/vista")
     alert("Ocurrió un error al cargar los documentos.");
   });
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Llenar selects al cargar la página
-  llenarSelectTipos();
-  llenarSelectCarreras();
-});
-
 // Función para llenar el select de modalidades
 function llenarSelectTipos() {
   fetch("http://localhost:5000/tipos")
@@ -83,7 +90,7 @@ function llenarSelectTipos() {
       selectTipo.innerHTML = '<option value="">Seleccionar Modalidad</option>'; // Opcional: Opción predeterminada
       data.forEach((tipo) => {
         const option = document.createElement("option");
-        option.value = tipo.id_tipo;
+        option.value = tipo.nombre; // Usa el nombre directamente
         option.textContent = tipo.nombre;
         selectTipo.appendChild(option);
       });
@@ -100,7 +107,7 @@ function llenarSelectCarreras() {
       selectCarrera.innerHTML = '<option value="">Seleccionar Carrera</option>'; // Opcional: Opción predeterminada
       data.forEach((carrera) => {
         const option = document.createElement("option");
-        option.value = carrera.id_carrera;
+        option.value = carrera.nombre; // Usa el nombre directamente
         option.textContent = carrera.nombre;
         selectCarrera.appendChild(option);
       });
@@ -108,28 +115,59 @@ function llenarSelectCarreras() {
     .catch((error) => console.error("Error al cargar carreras:", error));
 }
 
-function filtrarDocumentos() {
-  const tipo = document.getElementById("parametroTipo").value;
-  const carrera = document.getElementById("parametroCarrera").value;
-  const sede = document.getElementById("parametroSede").value;
+// Función para manejar el cambio en el select de carrera
+function manejarCambioCarrera() {
+  // Restablecer los otros selects al valor predeterminado
+  document.getElementById("parametroTipo").value = "";
+  document.getElementById("parametroSede").value = "";
   
-  let query = [];
-  if (tipo) query.push(`id_tipo_fk=${tipo}`);
-  if (carrera) query.push(`id_carrera_fk=${carrera}`);
-  if (sede) query.push(`sede=${encodeURIComponent(sede)}`);
-
-  const queryString = query.join("&");
-
-  fetch(`http://localhost:5000/documentos/vista?${queryString}`)
-    .then(response => response.json())
-    .then(data => {
-      cargaDocumentos(data); // Mostrar los documentos filtrados
-    })
-    .catch(error => {
-      console.error("Error al filtrar documentos:", error);
-      alert("Ocurrió un error al filtrar los documentos.");
-    });
+  // Filtrar documentos según la carrera seleccionada
+  filtrarDocumentos();
 }
+
+// Función para manejar el cambio en el select de tipo
+function manejarCambioTipo() {
+  // Restablecer los otros selects al valor predeterminado
+  document.getElementById("parametroCarrera").value = "";
+  document.getElementById("parametroSede").value = "";
+  
+  // Filtrar documentos según el tipo seleccionado
+  filtrarDocumentos();
+}
+
+// Función para manejar el cambio en el select de sede
+function manejarCambioSede() {
+  // Restablecer los otros selects al valor predeterminado
+  document.getElementById("parametroCarrera").value = "";
+  document.getElementById("parametroTipo").value = "";
+  
+  // Filtrar documentos según la sede seleccionada
+  filtrarDocumentos();
+}
+
+function filtrarDocumentos() {
+  const carrera = document.getElementById("parametroCarrera").value;
+  const tipo = document.getElementById("parametroTipo").value;
+  const sede = document.getElementById("parametroSede").value;
+
+  // Mostrar todos los documentos si no hay filtros aplicados
+  if (!carrera && !tipo && !sede) {
+    cargaDocumentos(datosIniciales);
+    return;
+  }
+  
+  // Filtrar documentos basados en los parámetros seleccionados
+  const datosFiltrados = datosIniciales.filter((dato) => {
+    const coincideCarrera = !carrera || dato.carrera === carrera;
+    const coincideTipo = !tipo || dato.tipo_titulacion === tipo;
+    const coincideSede = !sede || dato.sede === sede;
+    return coincideCarrera && coincideTipo && coincideSede;
+  });
+
+  cargaDocumentos(datosFiltrados); // Mostrar los documentos filtrados
+}
+
+// Función para buscar documentos por título o autor
 function buscarDocumentos() {
   const input = document.getElementById("buscarDocumento");
   const filtro = input.value.toUpperCase();

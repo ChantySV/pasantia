@@ -23,7 +23,7 @@ function generarTabla(datos) {
         const celdaAcciones = fila.insertCell();
         celdaAcciones.appendChild(crearBoton("Modificar", () => abrirVentanaEditar(documento)));
         celdaAcciones.appendChild(crearBoton("Eliminar", () => confirmarEliminacion(documento.id_documento)));
-        celdaAcciones.appendChild(crearBoton("Abrir", () => window.open(`../../../${documento.ruta_pdf}`)));
+        celdaAcciones.appendChild(crearBoton("Abrir", () => window.open(`${documento.ruta_pdf}`)));
     });
 }
 

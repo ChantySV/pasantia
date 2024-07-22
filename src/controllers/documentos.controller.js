@@ -6,7 +6,7 @@ const documentos = {};
 
 function agregarUpload(data) {
   data.forEach((data) => {
-    data.ruta_pdf = "/uploads/" + data.ruta_pdf;
+    data.ruta_pdf = "uploads/" + data.ruta_pdf;
   });
   return data;
 }
@@ -21,6 +21,23 @@ documentos.get = (req, res) => {
     }
     agregarUpload(result);
     res.json(result);
+  });
+};
+
+// GET FACULTAD POR ID
+documentos.getDocumentosPorId = (req, res) => {
+  let id_documento = req.params.id;
+  let sql = "SELECT * FROM documentos WHERE id_documento = ?";
+  conexion.query(sql, [id_documento], (err, result) => {
+    if (err) {
+      res.status(500).json({ error: "Error al obtener la documentoxd" });
+      return;
+    }
+    if (result.length === 0) {
+      res.status(404).json({ error: "Facultad no encontrada" });
+      return;
+    }
+    res.json(result[0]);
   });
 };
 
@@ -97,7 +114,7 @@ documentos.search = (req, res) => {
 documentos.post = (req, res) => {
   if (!req.file) {
     res.status(400).json({ error: "No se ha subido ningún archivo" });
-    //console.log(res);
+    console.log(res);
     return;
   }
   let anho = parseInt(req.body.anho);
@@ -118,11 +135,11 @@ documentos.post = (req, res) => {
   conexion.query(sql, data, (err, result) => {
     if (err) {
       res.status(500).json({ error: "Error al ingresar los datos", err });
-      //console.log(err);
+      console.log(err);
       return;
     }
     res.json(result);
-    //console.log(data);
+    console.log(data);
   });
 };
 
@@ -155,7 +172,7 @@ documentos.put = (req, res) => {
           res
             .status(500)
             .json({ error: "Error al obtener el documento existente", err });
-          //console.log(err);
+          console.log(err);
           return;
         }
 
@@ -184,11 +201,11 @@ documentos.put = (req, res) => {
   conexion.query(sql, data, (err, result) => {
     if (err) {
       res.status(500).json({ error: "Error al actualizar los datos", err });
-      //console.log(err);
+      console.log(err);
       return;
     }
     res.json(result);
-    //console.log(data);
+    console.log(data);
   });
 };
 
