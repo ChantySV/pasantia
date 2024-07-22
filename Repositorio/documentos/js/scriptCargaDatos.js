@@ -19,12 +19,12 @@ function obtenerFacultad() {
     .catch(error => manejarError(error, 'obtener Facultades'));
 }
 
-function obtenerCarrerasPorFacultad(idFacultad) {
+function obtenerCarrerasPorFacultad(idFacultad, idSelectCarrera) {
     fetch(`http://localhost:5000/carreras/cpf/${idFacultad}`, {
         method: 'GET',
     })
     .then(response => validarRespuesta(response, 'Carreras'))
-    .then(datos => llenarSelect('id_carrera_fk', 'Seleccionar Carrera', datos, 'id_carrera', 'nombreCarrera'))
+    .then(datos => llenarSelect(idSelectCarrera, 'Seleccionar Carrera', datos, 'id_carrera', 'nombreCarrera'))
     .catch(error => manejarError(error, 'obtener Carreras'));
 }
 

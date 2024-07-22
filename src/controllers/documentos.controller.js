@@ -37,7 +37,7 @@ documentos.getVista = (req, res) => {
   });
 };
 
-// GET BARRA De BUSQUEDA
+// GET BARRA DE BUSQUEDA
 documentos.search = (req, res) => {
   const { query } = req.params;
 
@@ -87,11 +87,11 @@ documentos.post = (req, res) => {
   conexion.query(sql, data, (err, result) => {
     if (err) {
       res.status(500).json({ error: "Error al ingresar los datos", err });
-      console.log(err);
+      //console.log(err);
       return;
     }
     res.json(result);
-    console.log(data);
+    //console.log(data);
   });
 };
 

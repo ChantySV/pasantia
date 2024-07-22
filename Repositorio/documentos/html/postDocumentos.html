@@ -62,7 +62,7 @@
     </form>
 
     <div id="mensaje" style="display: none;"></div>
-    <input type="text" id="busqueda" placeholder="Buscar por Título" oninput="filtrarTabla()">
+    <input type="text" id="busqueda" placeholder="Buscar por Título" oninput="buscarDocumentos()">
     <table id="tablaDatos">
         <thead>
             <tr>
@@ -87,13 +87,13 @@
                 <input type="hidden" id="edit-id_documento" name="id_documento" value="">
 
                 <label for="edit-tipo">Tipo:</label>
-                <select id="edit-tipo" name="tipo" required></select><br><br>
+                <select id="edit-tipo" name="id_tipo_fk" required></select><br><br>
 
                 <label for="edit-facultad">Facultad:</label>
-                <select id="edit-facultad" name="facultad" required></select><br><br>
+                <select id="edit-facultad" name="id_facultad_fk" required></select><br><br>
 
                 <label for="edit-carrera">Carrera:</label>
-                <select id="edit-carrera" name="carrera" required></select><br><br>
+                <select id="edit-carrera" name="id_carrera_fk" required></select><br><br>
 
                 <label for="edit-titulo">Título:</label>
                 <input type="text" id="edit-titulo" name="titulo" required><br><br>
