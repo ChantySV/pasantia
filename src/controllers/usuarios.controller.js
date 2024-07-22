@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 
 const usuarios = {};
 
-//GET GENERAL
+// GET GENERAL
 usuarios.getUsuarios = (req, res) => {
   let sql = "SELECT * FROM usuarios";
   conexion.query(sql, (err, result) => {
@@ -35,7 +35,7 @@ usuarios.getUsuariosUnico = (req, res) => {
   });
 };
 
-//POST USUARIOS
+// POST USUARIOS
 usuarios.postNuevoUsario = async (req, res) => {
   const { nombre, contrasenha } = req.body;
 
@@ -75,7 +75,6 @@ usuarios.postNuevoUsario = async (req, res) => {
         res
           .status(201)
           .json({ message: "Usuario creado exitosamente", result });
-        console.log(data);
       });
     });
   } catch (err) {
@@ -84,7 +83,7 @@ usuarios.postNuevoUsario = async (req, res) => {
   }
 };
 
-//PUT USUARIOS
+// PUT USUARIOS
 usuarios.putUsuario = async (req, res) => {
   const userId = req.params.id;
   const { nombre, contrasenha } = req.body;
@@ -125,7 +124,7 @@ usuarios.putUsuario = async (req, res) => {
   });
 };
 
-//DELETE  USUARIOS
+// DELETE USUARIOS
 usuarios.deleteUsuario = (req, res) => {
   const userId = req.params.id;
 
