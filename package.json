@@ -8,7 +8,7 @@
     "start": "node src/app.js",
     "create-db": "node src/config/createDatabase.js",
     "migrate": "knex migrate:latest",
-    "setup": "npm run create-db && npm run migrate && npm run create-folder",    
+    "setup": "npm run create-db && npm run migrate && npm run create-folder",
     "create-folder": "mkdir -p uploads"
   },
   "author": "",

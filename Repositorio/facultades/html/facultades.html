@@ -5,22 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Facultades</title>
     <link rel="stylesheet" href="../css/styleAdmin.css">
+    <link rel="icon" href="../../public/img/upds_logo.ico" type="image/x-icon">
 </head>
 <body>
     <nav>
         <ul>
-            <li><a href="./repositorio.html">Inicio</a></li>
-            <li><a href="./postDocumentos.html">Documentos</a></li>
-            <li><a href="./facultades.html">Facultades</a></li>
-            <li><a href="./tipos.html">Tipos</a></li>
-            <li><a href="./carreras.html">Carreras</a></li>
-            <li><a href="./usuarios.html">Usuarios</a></li>
-        </ul>
+            <li><a href="../../inicio/html/repositorio.html">Inicio</a></li>
+            <li><a href="../../documentos/html/postDocumentos.html">Documentos</a></li>
+            <li><a href="../../facultades/html/facultades.html">Facultades</a></li>
+            <li><a href="../../tipos/html/tipos.html">Modalidades de Grado</a></li>
+            <li><a href="../../carreras/html/carreras.html">Carreras</a></li>
+            <li><a href="../../usuarios/html/usuarios.html">Usuarios</a></li>
     </nav>
 
     <div class="container">
         <h2 class="title">Formulario de Facultades</h2>
-        <form id="postFacultades" action="#">
+        <form id="postFacultades" action="#" autocomplete="off">
             <label for="nombre">Nombre:</label>
             <input type="text" id="nombre" name="nombre" required>
             <input type="submit" value="Guardar">
@@ -46,7 +46,7 @@
         <div class="ventana-contenido">
             <span id="edit-cerrarVentana" class="cerrar">&times;</span>
             <h2>Editar Facultad</h2>
-            <form id="edit-formularioEditarFacultad" action="#">                
+            <form id="edit-formularioEditarFacultad" action="#" autocomplete="off">                
                 <label for="edit-nombre">Nombre:</label>
                 <input type="text" id="edit-nombre" name="nombre" required>
                 <input type="submit" value="Actualizar">
