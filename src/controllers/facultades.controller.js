@@ -13,6 +13,23 @@ facultades.getFacultades = (req, res) => {
   });
 };
 
+// GET FACULTAD POR ID
+facultades.getFacultadPorId = (req, res) => {
+  let id_facultad = req.params.id;
+  let sql = "SELECT * FROM facultades WHERE id_facultad = ?";
+  conexion.query(sql, [id_facultad], (err, result) => {
+    if (err) {
+      res.status(500).json({ error: "Error al obtener la facultad" });
+      return;
+    }
+    if (result.length === 0) {
+      res.status(404).json({ error: "Facultad no encontrada" });
+      return;
+    }
+    res.json(result[0]);
+  });
+};
+
 // POST FACULTADES
 facultades.postFacultades = (req, res) => {
   let { nombre } = req.body;
@@ -72,14 +89,32 @@ facultades.putFacultades = (req, res) => {
 
 // DELETE FACULTADES
 facultades.deleteFacultades = (req, res) => {
-  let sql = "DELETE FROM facultades WHERE id_facultad = ?";
-  conexion.query(sql, req.params.id, (err, result) => {
-    if (err) {
-      res.status(500).json({ error: "Error al eliminar la facultad" });
-      console.log(err);
-      return;
-    }
-    res.json(result);
+  const idFacultad = req.params.id;
+
+  // Verificar si la facultad tiene dependencias
+  let checkDependenciesSql = "SELECT COUNT(*) AS count FROM carreras WHERE id_facultad_fk = ?";
+  conexion.query(checkDependenciesSql, [idFacultad], (err, result) => {
+      if (err) {
+          res.status(500).json({ error: "Error al verificar dependencias" });
+          console.log(err);
+          return;
+      }
+
+      if (result[0].count > 0) {
+          res.status(400).json({ error: "La facultad tiene dependencias y no puede ser eliminada" });
+          return;
+      }
+
+      // Si no hay dependencias, proceder a eliminar la facultad
+      let sql = "DELETE FROM facultades WHERE id_facultad = ?";
+      conexion.query(sql, [idFacultad], (err, result) => {
+          if (err) {
+              res.status(500).json({ error: "Error al eliminar la facultad" });
+              console.log(err);
+              return;
+          }
+          res.json(result);
+      });
   });
 };
 
